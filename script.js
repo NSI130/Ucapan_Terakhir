@@ -1,24 +1,26 @@
-document.getElementById("btnShow").addEventListener("click", function() {
-    const input = document.getElementById("nameInput").value.trim();
-    const resultDiv = document.getElementById("result");
+// Ambil elemen input dan tempat tampil ucapan
+const inputNama = document.getElementById('nama');
+const hasilUcapan = document.getElementById('hasilUcapan');
 
-    if (input === "") {
-        resultDiv.textContent = "Tolong ketik nama dulu ya!";
-        return;
-    }
+// Fungsi untuk load data ucapan dari file JSON
+async function loadUcapan() {
+  const response = await fetch('ucapan.json');
+  const data = await response.json();
+  return data;
+}
 
-    const name = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
-    const filePath = `ucapan/${name}.txt`;
+inputNama.addEventListener('input', async function() {
+  const nama = inputNama.value.trim();
+  if (nama.length === 0) {
+    hasilUcapan.textContent = '';
+    return;
+  }
 
-    fetch(filePath)
-        .then(response => {
-            if (!response.ok) throw new Error("Ucapan tidak ditemukan!");
-            return response.text();
-        })
-        .then(text => {
-            resultDiv.textContent = text;
-        })
-        .catch(() => {
-            resultDiv.textContent = "Maaf, ucapan untuk nama ini belum tersedia.";
-        });
+  const ucapanData = await loadUcapan();
+
+  if (ucapanData[nama]) {
+    hasilUcapan.textContent = ucapanData[nama];
+  } else {
+    hasilUcapan.textContent = 'Maaf, ucapan untuk ' + nama + ' belum tersedia.';
+  }
 });
