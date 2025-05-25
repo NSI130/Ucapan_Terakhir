@@ -1,103 +1,221 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ucapan Terakhir</title>
-  <style>
-    body {
-      background: #121212;
-      color: white;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<title>Ucapan Terakhir Nashri</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+<style>
+  /* Reset & base */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    color: #f0f0f5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    overflow-x: hidden;
+  }
+  .container {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 3rem 3.5rem;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    text-align: center;
+  }
+  h1 {
+    font-weight: 600;
+    font-size: 2.4rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1.2px;
+    text-shadow: 0 0 8px rgba(255,255,255,0.15);
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+    background-color: rgba(255,255,255,0.12);
+    color: #f0f0f5;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  }
+  input[type="text"]:focus {
+    box-shadow: 0 0 12px #a29bfe;
+    background-color: rgba(255,255,255,0.2);
+  }
+  button {
+    margin-top: 1.4rem;
+    background: #6c63ff;
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 14px 30px;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(108,99,255,0.5);
+    transition: background 0.35s ease, transform 0.15s ease;
+    user-select: none;
+  }
+  button:hover {
+    background: #5848c2;
+    transform: scale(1.05);
+  }
+  button:active {
+    transform: scale(0.97);
+  }
+
+  /* Output styling */
+  #output {
+    margin-top: 2rem;
+    background: rgba(255,255,255,0.1);
+    padding: 1.8rem 2rem;
+    border-radius: 18px;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: #dcdcff;
+    min-height: 5rem;
+    box-shadow: 0 0 15px rgba(108,99,255,0.4);
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  #output.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Loading spinner */
+  .spinner {
+    border: 3.5px solid rgba(255, 255, 255, 0.2);
+    border-top: 3.5px solid #6c63ff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    margin-left: 12px;
+    display: inline-block;
+    vertical-align: middle;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .container {
+      padding: 2rem 2rem;
+      max-width: 95vw;
     }
-    input, button {
-      font-size: 1rem;
-      padding: 0.5rem 1rem;
-      margin: 0.5rem 0;
-      border-radius: 5px;
-      border: none;
-    }
-    input {
-      width: 300px;
-      max-width: 90vw;
+    h1 {
+      font-size: 2rem;
     }
     button {
-      background-color: #4caf50;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+      width: 100%;
+      padding: 14px 0;
     }
-    button:hover {
-      background-color: #45a049;
-    }
-    #output {
-      margin-top: 1.5rem;
-      background: #222;
-      padding: 1rem 1.5rem;
-      border-radius: 10px;
-      max-width: 600px;
-      text-align: center;
-      min-height: 3rem;
-      animation: fadeIn 0.5s ease forwards;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(10px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <h1>Ucapan Terakhir</h1>
-  <input type="text" id="nameInput" placeholder="Ketik nama kamu..." autocomplete="off" />
-  <button onclick="cariUcapan()">Cari</button>
-  <div id="output"></div>
+  <div class="container" role="main" aria-label="Ucapan Terakhir">
+    <h1>Ucapan Terakhir</h1>
+    <input type="text" id="nameInput" placeholder="Ketik nama kamu..." aria-label="Input nama" autocomplete="off" />
+    <button id="cariBtn" aria-label="Cari ucapan untuk nama yang diketik">Cari</button>
+    <div id="output" role="alert" aria-live="polite"></div>
+  </div>
 
-  <script>
-    const ucapan = {
-      "Revan": "Revan, teman baik yang duduk tepat di sampingku. Semoga kamu jadi pribadi yang lebih baik dan menemukan cewek cantik di SMK!",
-      "Callysta": "Callysta, temen yang duduk di belakangku. Kamu orang baik. Semoga di SMA nanti kamu bisa jadi lebih baik lagi ya.",
-      "Neyfa": "Neyfa, teman duduknya Callysta. Semoga kamu bisa lebih taat, lebih fokus, dan siapa tahu... ketemu Revan lagi di masa depan?",
-      "Mikael": "Mikael, kita bareng selama 3 kelas. Makasih ya udah jadi teman baik. Semoga dapat pengganti Ivana dan sukses di badminton!",
-      "Danish": "Danish, Nish, gw harap lu bisa lebih baik dari sebelumnya. Semoga nemu yang lebih baik dari Tabina juga ya!",
-      "Kekey": "Kekey, tetap jadi pribadi yang terus berkembang. Semoga nanti dapat permata—yang benar-benar permata.",
-      "Vania": "Hai Van... mungkin kita nggak akan sering bertemu lagi. Tapi aku sempat menyukaimu. Aku masih. Jadi lebih baik, ya.",
-      "Prima": "Prima, lu kuat walau tanpa Ave dan Marissa. Gw percaya lu orang hebat. Tetap jadi orang yang berguna ya.",
-      "Ivana": "Hey Kunti Bogellll, makasih buat masa-masa ini. Semoga kamu bisa jadi lebih baik yaa~ (Salam dari Mikel).",
-      "Chaderick": "Hey Chad, semoga di SMA bisa lebih keren lagi. Kalau ke Depok, jangan sungkan. OSN, body goal, semua semoga tercapai!",
-      "Risa": "Woi Risa, cosplay kapan? Gw tunggu. Sayang udah selesai. Semoga kamu capai semua impianmu ya.",
-      "Zefanya": "Zeff, temen hebat pas kelas 8. Makasih udah kasih banyak sudut pandang baru. Semoga semua harapanmu tercapai!",
-      "Aka": "HIIIIIIIII~ Meskipun kita nggak selalu dekat, kamu pernah jadi temanku. Maaf aku nggak bisa selalu ada. Tapi kamu harus semangat dan terus improve ya!",
-      "Raissa": "Heyyy Raiii~ Semoga harimu selalu lancar ya walau aku mungkin jarang aktif lagi. Kamu orang baik.",
-      "Ara": "Nyari apa lu? Gw tahu lu pasti nyari ini kan.",
-      "Salwa": "Heyy Salwa, makasih ya untuk momen-momen yang pernah ada. Semoga kamu dapatkan apa yang kamu inginkan, jadi pribadi yang lebih baik juga ya.",
-      "Adenna": "Heyy Denna, semoga Sylus beneran jadi suami kamu. Makasih udah jadi cerita di hidupku, titip salam buat Kirana ya!",
-      "Ibam": "Woy Barry! Lu orang baik. Semoga lu jadi body builder hebat dan masuk ke Olympian, bro!",
-      "Lira": "Hai Lira, makasih udah jadi bagian dari cerita hidupku. Semoga kamu dapat apa yang kamu inginkan dan semua berjalan lancar ya.",
-      "Ratri": "Woi Ratri, sehat-sehat terus ya. Udah dulu, gw mau makan.",
-      "Fauzan": "Fauzan dan Eko, semoga kalian sehat selalu. Gw tunggu lihat kalian pakai seragam TNI AL. Keren itu!",
-      "Eko": "Fauzan dan Eko, semoga kalian sehat selalu. Gw tunggu lihat kalian pakai seragam TNI AL. Keren itu!"
-    };
+<script>
+  const ucapan = {
+    "Revan": "Revan, teman baik yang duduk tepat di sampingku. Semoga kamu jadi pribadi yang lebih baik dan menemukan cewek cantik di SMK!",
+    "Callysta": "Callysta, temen yang duduk di belakangku. Kamu orang baik. Semoga di SMA nanti kamu bisa jadi lebih baik lagi ya.",
+    "Neyfa": "Neyfa, teman duduknya Callysta. Semoga kamu bisa lebih taat, lebih fokus, dan siapa tahu... ketemu Revan lagi di masa depan?",
+    "Mikael": "Mikael, kita bareng selama 3 kelas. Makasih ya udah jadi teman baik. Semoga dapat pengganti Ivana dan sukses di badminton!",
+    "Danish": "Danish, Nish, gw harap lu bisa lebih baik dari sebelumnya. Semoga nemu yang lebih baik dari Tabina juga ya!",
+    "Kekey": "Kekey, tetap jadi pribadi yang terus berkembang. Semoga nanti dapat permata—yang benar-benar permata.",
+    "Vania": "Hai Van... mungkin kita nggak akan sering bertemu lagi. Tapi aku sempat menyukaimu. Aku masih. Jadi lebih baik, ya.",
+    "Prima": "Prima, lu kuat walau tanpa Ave dan Marissa. Gw percaya lu orang hebat. Tetap jadi orang yang berguna ya.",
+    "Ivana": "Hey Kunti Bogellll, makasih buat masa-masa ini. Semoga kamu bisa jadi lebih baik yaa~ (Salam dari Mikel).",
+    "Chaderick": "Hey Chad, semoga di SMA bisa lebih keren lagi. Kalau ke Depok, jangan sungkan. OSN, body goal, semua semoga tercapai!",
+    "Risa": "Woi Risa, cosplay kapan? Gw tunggu. Sayang udah selesai. Semoga kamu capai semua impianmu ya.",
+    "Zefanya": "Zeff, temen hebat pas kelas 8. Makasih udah kasih banyak sudut pandang baru. Semoga semua harapanmu tercapai!",
+    "Aka": "HIIIIIIIII~ Meskipun kita nggak selalu dekat, kamu pernah jadi temanku. Maaf aku nggak bisa selalu ada. Tapi kamu harus semangat dan terus improve ya!",
+    "Raissa": "Heyyy Raiii~ Semoga harimu selalu lancar ya walau aku mungkin jarang aktif lagi. Kamu orang baik.",
+    "Ara": "Nyari apa lu? Gw tahu lu pasti nyari ini kan.",
+    "Salwa": "Heyy Salwa, makasih ya untuk momen-momen yang pernah ada. Semoga kamu dapatkan apa yang kamu inginkan, jadi pribadi yang lebih baik juga ya.",
+    "Adenna": "Heyy Denna, semoga Sylus beneran jadi suami kamu. Makasih udah jadi cerita di hidupku, titip salam buat Kirana ya!",
+    "Ibam": "Woy Barry! Lu orang baik. Semoga lu jadi body builder hebat dan masuk ke Olympian, bro!",
+    "Lira": "Hai Lira, makasih udah jadi bagian dari cerita hidupku. Semoga kamu dapat apa yang kamu inginkan dan semua berjalan lancar ya.",
+    "Ratri": "Woi Ratri, sehat-sehat terus ya. Udah dulu, gw mau makan.",
+    "Fauzan": "Fauzan dan Eko, semoga kalian sehat selalu. Gw tunggu lihat kalian pakai seragam TNI AL. Keren itu!",
+    "Eko": "Fauzan dan Eko, semoga kalian sehat selalu. Gw tunggu lihat kalian pakai seragam TNI AL. Keren itu!"
+  };
 
-    function cariUcapan() {
-      const input = document.getElementById("nameInput").value.trim();
-      const nama = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
-      const outputDiv = document.getElementById("output");
+  const input = document.getElementById('nameInput');
+  const output = document.getElementById('output');
+  const btn = document.getElementById('cariBtn');
 
-      if (!input) {
-        outputDiv.textContent = "Tolong ketik nama kamu dulu ya!";
-        return;
-      }
+  function formatName(str) {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
 
-      if (ucapan[nama]) {
-        outputDiv.textContent = ucapan[nama];
-      } else {
-        outputDiv.textContent = "Maaf, ucapan untuk nama tersebut tidak ditemukan.";
-      }
+  function showLoading() {
+    btn.disabled = true;
+    btn.innerHTML = `Mencari <span class="spinner" aria-hidden="true"></span>`;
+  }
+
+  function hideLoading() {
+    btn.disabled = false;
+    btn.textContent = 'Cari';
+  }
+
+  function cariUcapan() {
+    const nama = formatName(input.value.trim());
+
+    if (!nama) {
+      output.textContent = "Tolong ketik nama kamu dulu ya!";
+      output.classList.add('visible');
+      return;
     }
-  </script>
+
+    showLoading();
+
+    // Simulasi loading 1 detik supaya animasi terasa smooth
+    setTimeout(() => {
+      if (ucapan[nama]) {
+        output.textContent = ucapan[nama];
+      } else {
+        output.textContent = `Maaf, ucapan untuk "${nama}" belum tersedia. Tapi semangat terus ya!`;
+      }
+      output.classList.add('visible');
+      hideLoading();
+    }, 1000);
+  }
+
+  btn.addEventListener('click', cariUcapan);
+
+  // Enter bisa langsung cari
+  input.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+      cariUcapan();
+    }
+  });
+</script>
+
 </body>
 </html>
