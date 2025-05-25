@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Ucapan Terakhir</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 50px; }
+    input { padding: 10px; width: 200px; }
+    button { padding: 10px 20px; }
+    #output { margin-top: 20px; white-space: pre-line; }
+  </style>
+</head>
+<body>
+  <h1>Ucapan Terakhir</h1>
+  <p>Ketik nama kamu:</p>
+  <input type="text" id="nama" placeholder="Contoh: Nashri">
+  <button onclick="cariUcapan()">Cari</button>
+  <div id="output"></div>
+
+  <script>
+    function cariUcapan() {
+      const nama = document.getElementById('nama').value.trim();
+      const output = document.getElementById('output');
+      if (!nama) return output.innerText = "Silakan masukkan nama dulu.";
+      fetch(`ucapan/${nama}.txt`)
+        .then(res => {
+          if (!res.ok) throw new Error("Ucapan tidak ditemukan.");
+          return res.text();
+        })
+        .then(text => output.innerText = text)
+        .catch(() => output.innerText = "Maaf, ucapan untuk " + nama + " belum tersedia.");
+    }
+  </script>
+</body>
+</html>
