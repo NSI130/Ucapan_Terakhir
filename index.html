@@ -1,14 +1,41 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>Ucapan Perpisahan</title>
+  <meta charset="UTF-8">
+  <title>Ucapan Terakhir</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    input {
+      padding: 10px;
+      width: 200px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 30px;
+      font-size: 18px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      white-space: pre-line;
+    }
+  </style>
 </head>
 <body>
-  <h1>Masukkan Nama Kamu</h1>
-  <input type="text" id="nama" placeholder="Ketik nama kamu..." />
-  <p id="hasilUcapan"></p>
+  <h1>Ucapan Terakhir</h1>
+  <input type="text" id="nameInput" placeholder="Masukkan Namamu">
+  <button onclick="cariUcapan()">Cari</button>
+
+  <div id="output"></div>
 
   <script src="script.js"></script>
 </body>
 </html>
+
