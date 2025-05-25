@@ -3,34 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <title>Ucapan Terakhir</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: sans-serif;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f8f9fa, #e0f7fa);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
       text-align: center;
-      padding: 50px;
     }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 36px;
+    }
+
     input {
-      padding: 10px;
-      width: 200px;
-      margin-bottom: 10px;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      outline: none;
+      width: 250px;
+      transition: all 0.3s;
     }
+
+    input:focus {
+      border-color: #00acc1;
+    }
+
     button {
-      padding: 10px 20px;
+      margin-top: 15px;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      background-color: #00acc1;
+      color: white;
       cursor: pointer;
+      transition: background 0.3s;
     }
+
+    button:hover {
+      background-color: #00838f;
+    }
+
     #output {
       margin-top: 30px;
-      font-size: 18px;
+      padding: 20px;
+      background: #ffffffcc;
+      backdrop-filter: blur(5px);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      font-size: 18px;
       white-space: pre-line;
+      color: #333;
+    }
+
+    @media (max-width: 600px) {
+      input, button {
+        width: 80%;
+      }
     }
   </style>
 </head>
 <body>
   <h1>Ucapan Terakhir</h1>
   <input type="text" id="nameInput" placeholder="Masukkan Namamu">
+  <br>
   <button onclick="cariUcapan()">Cari</button>
 
   <div id="output"></div>
@@ -38,4 +90,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
