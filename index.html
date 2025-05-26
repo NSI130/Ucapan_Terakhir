@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>Ucapan Spesial Nashri</title>
   <style>
-    /* Reset */
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Poppins', sans-serif;
       background: #f5f7fa;
@@ -21,7 +18,6 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-
     .container {
       background: #ffffff;
       border-radius: 20px;
@@ -33,7 +29,6 @@
       position: relative;
       overflow: hidden;
     }
-
     h1 {
       font-weight: 700;
       font-size: 2.6rem;
@@ -42,7 +37,6 @@
       letter-spacing: 1.3px;
       user-select: none;
     }
-
     input[type="text"] {
       width: 100%;
       padding: 16px 22px;
@@ -54,13 +48,11 @@
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
       outline-offset: 2px;
     }
-
     input[type="text"]:focus {
       border-color: #5e81ac;
       box-shadow: 0 0 10px rgba(94,129,172,0.5);
       background-color: #fff;
     }
-
     button {
       margin-top: 1.6rem;
       background: #4c566a;
@@ -93,23 +85,6 @@
       box-shadow: none;
       transform: none;
     }
-
-    /* Spinner */
-    .spinner {
-      border: 3.5px solid rgba(255,255,255,0.3);
-      border-top: 3.5px solid #eceff4;
-      border-radius: 50%;
-      width: 22px;
-      height: 22px;
-      animation: spin 1s linear infinite;
-      margin-left: 12px;
-      display: inline-block;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Output Box */
     #output {
       margin-top: 2.5rem;
       background: #e5e9f0;
@@ -130,8 +105,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-
-    /* Responsive */
     @media (max-width: 600px) {
       .container {
         padding: 2rem 2rem;
@@ -148,24 +121,12 @@
   </style>
 </head>
 <body>
-  <div class="container" role="main" aria-label="Form input ucapan spesial">
+  <div class="container">
     <h1>Ucapan Spesialmu, Nashri</h1>
-    <input
-      type="text"
-      id="nameInput"
-      aria-label="Masukkan nama kamu"
-      placeholder="Ketik nama kamu di sini..."
-      autocomplete="off"
-      spellcheck="false"
-      autofocus
-      onkeydown="if(event.key==='Enter'){cariUcapan();}"
-    />
-    <button id="cariBtn" aria-live="polite" aria-label="Cari ucapan" onclick="cariUcapan()">
-      Cari
-    </button>
-    <div id="output" role="region" aria-live="polite" aria-atomic="true"></div>
+    <input type="text" id="nameInput" placeholder="Ketik nama kamu di sini..." autocomplete="off" spellcheck="false" autofocus onkeydown="if(event.key==='Enter'){cariUcapan();}" />
+    <button id="cariBtn" onclick="cariUcapan()">Cari</button>
+    <div id="output"></div>
   </div>
-
   <script>
     const ucapan = {
       "Revan": "Revan, teman baik yang duduk tepat di sampingku. Semoga kamu jadi pribadi yang lebih baik dan menemukan cewek cantik di SMK!",
@@ -183,7 +144,7 @@
       "Aka": "HIIIIIIIII~ Meskipun kita nggak selalu dekat, kamu pernah jadi temanku. Maaf aku nggak bisa selalu ada. Tapi kamu harus semangat dan terus improve ya! i love you",
       "Raissa": "Heyyy Raiii~ Semoga harimu selalu lancar ya walau aku mungkin jarang aktif lagi. Kamu orang baik.",
       "Ara": "Nyari apa lu? Gw tahu lu pasti nyari ini kan.",
-      "Salwa": "Heyy Salwa, makasih ya untuk momen-momen yang pernah ada. Semoga kamu dapatkan apa yang kamu inginkan, jadi pribadi yang lebih baik juga ya. aku menyukaimu seperti yng kau katakan di awal",
+      "Salwa": "Heyy Salwa, makasih ya untuk momen-momen yang pernah ada. Semoga kamu dapatkan apa yang kamu inginkan, jadi pribadi yang lebih baik juga ya.",
       "Adenna": "Heyy Denna, semoga Sylus beneran jadi suami kamu. Makasih udah jadi cerita di hidupku, titip salam buat Kirana ya!",
       "Ibam": "Woy Barry! Lu orang baik. Semoga lu jadi body builder hebat dan masuk ke Olympian, bro!",
       "Lira": "Hai Lira, makasih udah jadi bagian dari cerita hidupku. Semoga kamu dapat apa yang kamu inginkan dan semua berjalan lancar ya.",
@@ -195,44 +156,12 @@
       "Ruth": "Hai Ruth, terimakasih ya untuk kamu, pandangan baru, semoga nanti di SMA dapat lolos olimpiade, dan tercapai keinginan kamu ya, semangat"
     };
 
-    const inputEl = document.getElementById('nameInput');
-    const outputEl = document.getElementById('output');
-    const buttonEl = document.getElementById('cariBtn');
-
-    function setLoading(isLoading) {
-      if(isLoading) {
-        buttonEl.disabled = true;
-        buttonEl.innerHTML = 'Mencari <span class="spinner"></span>';
-      } else {
-        buttonEl.disabled = false;
-        buttonEl.textContent = 'Cari';
-      }
-    }
-
     function cariUcapan() {
-      const raw = inputEl.value.trim();
-      if(raw.length === 0) {
-        showOutput("Tolong masukkan nama dulu ya!");
-        return;
-      }
-
-      const nama = raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase();
-
-      setLoading(true);
-      // Simulasi loading sebentar supaya animasi terasa
-      setTimeout(() => {
-        if(ucapan[nama]) {
-          showOutput(ucapan[nama]);
-        } else {
-          showOutput("Maaf, ucapan untuk nama tersebut tidak ditemukan.");
-        }
-        setLoading(false);
-      }, 600);
-    }
-
-    function showOutput(text) {
-      outputEl.textContent = text;
-      outputEl.classList.add('visible');
+      const nama = document.getElementById("nameInput").value.trim();
+      const output = document.getElementById("output");
+      const pesan = ucapan[nama] || `Hai ${nama}, maaf ya namamu belum ada di daftar ucapan. Tapi semoga harimu tetap menyenangkan! :)`;
+      output.textContent = pesan;
+      output.classList.add("visible");
     }
   </script>
 </body>
